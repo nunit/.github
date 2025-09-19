@@ -1,0 +1,46 @@
+{
+  "extends": [
+    "config:best-practices"
+  ],
+  "timezone": "Europe/London",
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "📌 Dependency Dashboard",
+  "dependencyDashboardAutoclose": false,
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "schedule":["* 0-23 * * *"],
+  "prHourlyLimit": 4,
+  "prConcurrentLimit": 5,
+  "labels": [
+    "dependencies"
+  ],
+  "packageRules": [
+    {
+      "groupName": "NuGet non-major updates",
+      "matchManagers": [
+        "nuget"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest",
+        "pin",
+        "rollback"
+      ]
+    },
+    {
+      "groupName": "GitHub Actions non-major updates",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest",
+        "pin",
+        "rollback"
+      ]
+    }
+  ]
+}
