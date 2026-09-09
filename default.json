@@ -17,16 +17,25 @@
   ],
   "packageRules": [
     {
-      "groupName": "NuGet non-major updates",
+      "groupName": "NuGet minor updates",
       "matchManagers": [
         "nuget"
       ],
       "matchUpdateTypes": [
         "minor",
+      ]
+    },
+    {
+      "groupName": "NuGet patch updates",
+      "matchManagers": [
+        "nuget"
+      ],
+      "matchUpdateTypes": [
         "patch",
         "digest",
         "pin",
-        "rollback"
+        "rollback",
+        "schedule": ["* 0-8 * * *"]
       ]
     },
     {
@@ -39,7 +48,8 @@
         "patch",
         "digest",
         "pin",
-        "rollback"
+        "rollback",
+        "schedule": ["* 0-8 * * 6"]
       ]
     }
   ]
