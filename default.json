@@ -9,7 +9,6 @@
   "vulnerabilityAlerts": {
     "enabled": true
   },
-  "schedule":["* 0-23 * * *"],
   "prHourlyLimit": 4,
   "prConcurrentLimit": 5,
   "labels": [
@@ -18,39 +17,20 @@
   "packageRules": [
     {
       "groupName": "NuGet minor updates",
-      "matchManagers": [
-        "nuget"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-      ]
+      "matchManagers": ["nuget"],
+      "matchUpdateTypes": ["minor"]
     },
     {
       "groupName": "NuGet patch updates",
-      "matchManagers": [
-        "nuget"
-      ],
-      "matchUpdateTypes": [
-        "patch",
-        "digest",
-        "pin",
-        "rollback",
-        "schedule": ["* 0-8 * * *"]
-      ]
+      "matchManagers": ["nuget"],
+      "matchUpdateTypes": ["patch", "digest", "pin", "rollback"],
+      "schedule": ["* 0-8 * * *"]
     },
     {
       "groupName": "GitHub Actions non-major updates",
-      "matchManagers": [
-        "github-actions"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "digest",
-        "pin",
-        "rollback",
-        "schedule": ["* 0-8 * * 6"]
-      ]
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "rollback"],
+      "schedule": ["* 0-8 * * 6"]
     }
   ]
 }
