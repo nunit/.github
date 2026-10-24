@@ -11,12 +11,17 @@ permissions:
 jobs:
   update-draft-label:
     runs-on: ubuntu-latest
+    # One run at a time per PR, so a queued run cannot act on stale state.
+    concurrency:
+      group: draft-label-${{ github.repository }}-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
     steps:
       - uses: actions/github-script@v9
         with:
           script: |
             const labelName = '🚧 Draft/WIP';
-            const pr = context.payload.pull_request;
+            // Read current state, not the event payload, which may be stale by now.
+            const { data: pr } = await github.rest.pulls.get({ ...context.repo, pull_number: context.payload.pull_request.number });
             const hasLabel = pr.labels.some(label => label.name === labelName);
             const params = { ...context.repo, issue_number: pr.number };
 
