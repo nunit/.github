@@ -19,7 +19,7 @@ jobs:
       - uses: actions/github-script@v9
         with:
           script: |
-            const labelName = '🚧 Draft/WIP';
+            const labelName = '🚧 Draft';
             // Read current state, not the event payload, which may be stale by now.
             const { data: pr } = await github.rest.pulls.get({ ...context.repo, pull_number: context.payload.pull_request.number });
             const hasLabel = pr.labels.some(label => label.name === labelName);
