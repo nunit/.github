@@ -1,0 +1,27 @@
+name: Draft PR Labeler
+
+# Reusable workflow. Each repo calls it from a small workflow on pull_request_target.
+# Safe: no checkout, only PR metadata from the caller's event payload is used.
+on:
+  workflow_call:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  update-draft-label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v9
+        with:
+          script: |
+            const labelName = '🚧 Draft/WIP';
+            const pr = context.payload.pull_request;
+            const hasLabel = pr.labels.some(label => label.name === labelName);
+            const params = { ...context.repo, issue_number: pr.number };
+
+            if (pr.draft && !hasLabel) {
+              await github.rest.issues.addLabels({ ...params, labels: [labelName] });
+            } else if (!pr.draft && hasLabel) {
+              await github.rest.issues.removeLabel({ ...params, name: labelName });
+            }
